@@ -1,0 +1,6 @@
+[package]
+name = "colorful"
+version = "0.1.0"
+authors = ["da2018 <da2018t@gmail.com>"]
+
+[dependencies]
