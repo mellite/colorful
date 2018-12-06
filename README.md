@@ -1,5 +1,4 @@
 <h1 align="center">
-	<br>
 	<a>Colorful</a>
 	<br>
 	<br>

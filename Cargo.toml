@@ -3,4 +3,13 @@ name = "colorful"
 version = "0.1.0"
 authors = ["da2018 <da2018t@gmail.com>"]
 
+description = "Make your terminal output colorful"
+license = "MIT"
+license-file = "license"
+homepage = "https://github.com/rocketsman/colorful"
+readme = "README.md"
+keywords = ["rust","color","terminal"]
+categories = ["rust","color","terminal"]
+repository = "https://github.com/rocketsman/colorful"
+
 [dependencies]
