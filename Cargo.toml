@@ -5,7 +5,6 @@ authors = ["da2018 <da2018t@gmail.com>"]
 
 description = "Make your terminal output colorful"
 license = "MIT"
-license-file = "license"
 homepage = "https://github.com/rocketsman/colorful"
 readme = "README.md"
 keywords = ["rust","color","terminal"]

@@ -19,66 +19,19 @@ use std::borrow::Cow;
 
 use std::fmt::Display;
 use std::fmt::Formatter;
-use std::fmt::Result as FmtResult;
-use std::ops::Add;
 
+use core::color_string::ColorfulString;
 pub use core::colors::Color;
 use core::colors::Colorado;
-use core::colors::ColorMode;
-pub use core::colors::HSL;
-pub use core::colors::hsl_to_rgb;
-pub use core::colors::RGB;
+pub use core::hsl::HSL;
+use core::hsl::hsl_to_rgb;
+pub use core::rgb::RGB;
+use core::StrMarker;
 pub use core::style::Style;
 use core::symbols::Symbol;
 
 pub mod core;
 
-// Support multiple style
-pub struct ColorfulString {
-    text: String,
-    fg_color: Option<Colorado>,
-    bg_color: Option<Colorado>,
-    styles: Option<Vec<Style>>,
-}
-
-impl<'a> Add<&'a str> for ColorfulString {
-    type Output = Cow<'a, str>;
-
-    #[inline]
-    fn add(self, rhs: &'a str) -> Self::Output {
-        let mut s = self.to_string();
-        s.push_str(rhs);
-        Cow::Owned(s)
-    }
-}
-
-pub trait StrMarker {
-    fn to_str(&self) -> String;
-    fn get_fg_color(&self) -> Option<Colorado> { None }
-    fn get_bg_color(&self) -> Option<Colorado> { None }
-    fn get_style(&self) -> Option<Vec<Style>> { None }
-}
-
-impl<'a> StrMarker for &'a str {
-    fn to_str(&self) -> String {
-        String::from(*self)
-    }
-}
-
-impl StrMarker for ColorfulString {
-    fn to_str(&self) -> String {
-        self.text.to_owned()
-    }
-    fn get_fg_color(&self) -> Option<Colorado> {
-        self.fg_color.clone()
-    }
-    fn get_bg_color(&self) -> Option<Colorado> {
-        self.bg_color.clone()
-    }
-    fn get_style(&self) -> Option<Vec<Style>> {
-        self.styles.clone()
-    }
-}
 
 pub trait Colorful {
     fn color(self, color: Color) -> ColorfulString;
@@ -174,7 +127,6 @@ impl<T> Colorful for T where T: StrMarker {
             },
             fg_color: self.get_fg_color(),
             bg_color: self.get_bg_color(),
-
         }
     }
     // style
@@ -215,68 +167,3 @@ impl<T> ExtraColorInterface for T where T: Colorful {
     fn grey0(self) -> ColorfulString { self.color(Color::Grey0) }
 }
 
-
-impl Display for ColorfulString {
-    fn fmt(&self, f: &mut Formatter) -> FmtResult {
-        let mut is_colored = false;
-
-        if self.bg_color.is_none() && self.fg_color.is_none() && self.styles.is_none() {
-            write!(f, "{}", self.text)?;
-            Ok(())
-        } else {
-            match &self.fg_color {
-                Some(v) => {
-                    is_colored = true;
-                    match v.mode {
-                        ColorMode::SIMPLE => {
-                            f.write_str(Symbol::Simple256Foreground.to_str())?;
-                        }
-                        ColorMode::RGB => {
-                            f.write_str(Symbol::RgbForeground.to_str())?;
-                        }
-                        _ => {}
-                    }
-                    write!(f, "{}", v.color)?;
-                }
-                _ => {}
-            }
-            match &self.bg_color {
-                Some(v) => {
-                    if is_colored {
-                        f.write_str(Symbol::Mode.to_str())?;
-                    } else {
-                        is_colored = true;
-                    }
-                    match v.mode {
-                        ColorMode::SIMPLE => {
-                            f.write_str(Symbol::Simple256Background.to_str())?;
-                        }
-                        ColorMode::RGB => {
-                            f.write_str(Symbol::RgbBackground.to_str())?;
-                        }
-                        _ => {}
-                    }
-                    write!(f, "{}", v.color)?;
-                }
-                _ => {}
-            }
-
-            match &self.styles {
-                Some(v) => {
-                    if !is_colored { // pure style without color
-                        write!(f, "{}{}", Symbol::Esc, Symbol::LeftBrackets)?;
-                    } else {
-                        f.write_str(Symbol::Semicolon.to_str())?;
-                    }
-                    let t: Vec<String> = v.into_iter().map(|x| x.to_string()).collect();
-                    f.write_str(&t.join(";")[..])?;
-                }
-                _ => {}
-            }
-            f.write_str(Symbol::Mode.to_str())?;
-            write!(f, "{}", self.text)?;
-            f.write_str(Symbol::Reset.to_str())?;
-            Ok(())
-        }
-    }
-}
