@@ -4,6 +4,7 @@
 	<br>
 </h1>
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/37a45510f41445eea0168f0f07e8f7cb)](https://app.codacy.com/app/rocketsman/colorful_2?utm_source=github.com&utm_medium=referral&utm_content=rocketsman/colorful&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.org/da2018/colorful.svg?branch=master)](https://travis-ci.org/da2018/colorful) [![Coverage Status](https://img.shields.io/coveralls/github/da2018/colorful.svg)](https://coveralls.io/github/da2018/colorful?branch=master)
 
 ## Usage
