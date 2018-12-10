@@ -11,7 +11,7 @@ pub enum Symbol {
     Simple256Foreground,
     Simple256Background,
     RgbForeground,
-    RgbBackground
+    RgbBackground,
 }
 
 impl Symbol {

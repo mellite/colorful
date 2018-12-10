@@ -1,7 +1,6 @@
 //! Colored your terminal.
 //! You can use this package to make your string colorful in terminal.
 
-use std::borrow::Cow;
 /// It is recommended to use `Color` enum item to set foreground color.
 /// # Examples
 /// ```
@@ -17,18 +16,13 @@ use std::borrow::Cow;
 /// ```
 ///
 
-use std::fmt::Display;
-use std::fmt::Formatter;
 
 use core::color_string::ColorfulString;
 pub use core::colors::Color;
-use core::colors::Colorado;
 pub use core::hsl::HSL;
-use core::hsl::hsl_to_rgb;
 pub use core::rgb::RGB;
 use core::StrMarker;
 pub use core::style::Style;
-use core::symbols::Symbol;
 
 pub mod core;
 
@@ -74,46 +68,22 @@ pub trait Colorful {
 impl<T> Colorful for T where T: StrMarker {
     /// Using enum item is recommended. color will replace
     fn color(self, color: Color) -> ColorfulString {
-        ColorfulString {
-            text: String::from(self.to_str()),
-            fg_color: Some(Colorado::new(color)),
-            bg_color: self.get_bg_color(),
-            styles: self.get_style(),
-        }
+        ColorfulString::create_by_fg(self, color)
     }
     fn bg_color(self, color: Color) -> ColorfulString {
-        ColorfulString {
-            text: String::from(self.to_str()),
-            fg_color: self.get_fg_color(),
-            bg_color: Some(Colorado::new(color)),
-            styles: self.get_style(),
-        }
+        ColorfulString::create_by_bg(self, color)
     }
     fn rgb(self, r: u8, g: u8, b: u8) -> ColorfulString {
-        ColorfulString {
-            text: String::from(self.to_str()),
-            fg_color: Some(Colorado::new(RGB::new(r, g, b))),
-            bg_color: self.get_bg_color(),
-            styles: self.get_style(),
-        }
+        ColorfulString::create_by_fg(self, RGB::new(r, g, b))
     }
     fn bg_rgb(self, r: u8, g: u8, b: u8) -> ColorfulString {
-        ColorfulString {
-            text: String::from(self.to_str()),
-            fg_color: self.get_fg_color(),
-            bg_color: Some(Colorado::new(RGB::new(r, g, b))),
-            styles: self.get_style(),
-        }
+        ColorfulString::create_by_bg(self, RGB::new(r, g, b))
     }
     fn hsl(self, h: f32, s: f32, l: f32) -> ColorfulString {
-        let c = hsl_to_rgb(HSL::new(h, s, l));
-        let (r, g, b) = c.unpack();
-        self.rgb(r, g, b)
+        ColorfulString::create_by_fg(self, HSL::new(h, s, l))
     }
     fn bg_hsl(self, h: f32, s: f32, l: f32) -> ColorfulString {
-        let c = hsl_to_rgb(HSL::new(h, s, l));
-        let (r, g, b) = c.unpack();
-        self.bg_rgb(r, g, b)
+        ColorfulString::create_by_bg(self, HSL::new(h, s, l))
     }
     fn style(self, style: Style) -> ColorfulString {
         ColorfulString {
