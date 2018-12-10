@@ -21,6 +21,7 @@ fn test_color() {
 fn test_bg_color() {
     let s = "Hello world";
     assert_eq!("\x1B[38;5;1m\x1B[48;5;16mHello world\x1B[0m".to_owned(), s.color(Color::Red).bg_color(Color::Grey0).to_string());
+    assert_eq!("\x1B[38;5;1m\x1B[48;5;6mHello world\x1B[0m".to_owned(), s.color(Color::Red).bg_cyan().to_string());
     assert_eq!("\x1B[38;5;220m\x1B[48;5;6mHello world\x1B[0m".to_owned(), s.color(Color::Red).color(Color::Gold1).bg_color(Color::Cyan).to_string());
 }
 

@@ -63,6 +63,20 @@ pub trait Colorful {
     // background color
     fn bg_black(self) -> CString;
     fn bg_red(self) -> CString;
+    fn bg_green(self) -> CString;
+    fn bg_yellow(self) -> CString;
+    fn bg_blue(self) -> CString;
+    fn bg_magenta(self) -> CString;
+    fn bg_cyan(self) -> CString;
+    fn bg_light_gray(self) -> CString;
+    fn bg_dark_gray(self) -> CString;
+    fn bg_light_red(self) -> CString;
+    fn bg_light_green(self) -> CString;
+    fn bg_light_yellow(self) -> CString;
+    fn bg_light_blue(self) -> CString;
+    fn bg_light_magenta(self) -> CString;
+    fn bg_light_cyan(self) -> CString;
+    fn bg_white(self) -> CString;
 }
 
 impl<T> Colorful for T where T: StrMarker {
@@ -99,8 +113,22 @@ impl<T> Colorful for T where T: StrMarker {
     fn light_cyan(self) -> CString { self.color(Color::LightCyan) }
     fn white(self) -> CString { self.color(Color::White) }
     // background color
-    fn bg_black(self) -> CString { self.bg_color(Color::White) }
-    fn bg_red(self) -> CString { self.bg_color(Color::White) }
+    fn bg_black(self) -> CString { self.bg_color(Color::Black) }
+    fn bg_red(self) -> CString { self.bg_color(Color::Red) }
+    fn bg_green(self) -> CString { self.bg_color(Color::Green) }
+    fn bg_yellow(self) -> CString { self.bg_color(Color::Yellow) }
+    fn bg_blue(self) -> CString { self.bg_color(Color::Blue) }
+    fn bg_magenta(self) -> CString { self.bg_color(Color::Magenta) }
+    fn bg_cyan(self) -> CString { self.bg_color(Color::Cyan) }
+    fn bg_light_gray(self) -> CString { self.bg_color(Color::LightGray) }
+    fn bg_dark_gray(self) -> CString { self.bg_color(Color::DarkGray) }
+    fn bg_light_red(self) -> CString { self.bg_color(Color::LightRed) }
+    fn bg_light_green(self) -> CString { self.bg_color(Color::LightGreen) }
+    fn bg_light_yellow(self) -> CString { self.bg_color(Color::LightYellow) }
+    fn bg_light_blue(self) -> CString { self.bg_color(Color::LightBlue) }
+    fn bg_light_magenta(self) -> CString { self.bg_color(Color::LightMagenta) }
+    fn bg_light_cyan(self) -> CString { self.bg_color(Color::LightCyan) }
+    fn bg_white(self) -> CString { self.bg_color(Color::White) }
 }
 
 
