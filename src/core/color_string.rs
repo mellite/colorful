@@ -10,14 +10,14 @@ use Style;
 
 // Support multiple style
 #[derive(Clone)]
-pub struct ColorfulString {
-    pub text: String,
-    pub fg_color: Option<Colorado>,
-    pub bg_color: Option<Colorado>,
-    pub styles: Option<Vec<Style>>,
+pub struct CString {
+    text: String,
+    fg_color: Option<Colorado>,
+    bg_color: Option<Colorado>,
+    styles: Option<Vec<Style>>,
 }
 
-impl StrMarker for ColorfulString {
+impl StrMarker for CString {
     fn to_str(&self) -> String {
         self.text.to_owned()
     }
@@ -33,24 +33,39 @@ impl StrMarker for ColorfulString {
 }
 
 
-impl ColorfulString {
-    pub fn new<T: StrMarker>(cs: T) -> ColorfulString {
-        ColorfulString {
+impl CString {
+    pub fn new<T: StrMarker>(cs: T) -> CString {
+        CString {
             text: String::from(cs.to_str()),
             fg_color: cs.get_fg_color(),
             bg_color: cs.get_bg_color(),
             styles: cs.get_style(),
         }
     }
-    pub fn create_by_fg<T: ToString, S: StrMarker>(cs: S, color: T) -> ColorfulString {
-        ColorfulString { fg_color: Some(Colorado::new(color)), ..ColorfulString::new(cs) }
+    pub fn create_by_fg<T: ToString, S: StrMarker>(cs: S, color: T) -> CString {
+        CString { fg_color: Some(Colorado::new(color)), ..CString::new(cs) }
     }
-    pub fn create_by_bg<T: ToString, S: StrMarker>(cs: S, color: T) -> ColorfulString {
-        ColorfulString { bg_color: Some(Colorado::new(color)), ..ColorfulString::new(cs) }
+    pub fn create_by_bg<T: ToString, S: StrMarker>(cs: S, color: T) -> CString {
+        CString { bg_color: Some(Colorado::new(color)), ..CString::new(cs) }
+    }
+
+    pub fn create_by_style<S: StrMarker>(cs: S, style: Style) -> CString {
+        CString {
+            text: String::from(cs.to_str()),
+            styles: match cs.get_style() {
+                Some(mut v) => {
+                    v.push(style);
+                    Some(v)
+                }
+                _ => { Some(vec![style]) }
+            },
+            fg_color: cs.get_fg_color(),
+            bg_color: cs.get_bg_color(),
+        }
     }
 }
 
-impl Display for ColorfulString {
+impl Display for CString {
     fn fmt(&self, f: &mut Formatter) -> FmtResult {
         let mut is_colored = false;
 
