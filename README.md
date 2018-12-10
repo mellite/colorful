@@ -1,17 +1,16 @@
 <h1 align="center">
-	<a>Colorful</a>
-	<br>
-	<br>
+        <a>Colorful</a>
+        <br>
+        <br>
 </h1>
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/37a45510f41445eea0168f0f07e8f7cb)](https://app.codacy.com/app/rocketsman/colorful_2?utm_source=github.com&utm_medium=referral&utm_content=rocketsman/colorful&utm_campaign=Badge_Grade_Dashboard)
-[![Build Status](https://travis-ci.org/da2018/colorful.svg?branch=master)](https://travis-ci.org/da2018/colorful) [![Coverage Status](https://img.shields.io/coveralls/github/da2018/colorful.svg)](https://coveralls.io/github/da2018/colorful?branch=master)
+[![Build Status](https://travis-ci.org/rocketsman/colorful.svg?branch=master)](https://travis-ci.org/rocketsman/colorful) [![Coverage Status](https://img.shields.io/coveralls/github/da2018/colorful.svg)](https://coveralls.io/github/da2018/colorful?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/37a45510f41445eea0168f0f07e8f7cb)](https://app.codacy.com/app/rocketsman/colorful_2?utm_source=github.com&utm_medium=referral&utm_content=rocketsman/colorful&utm_campaign=Badge_Grade_Dashboard)
 
 ## Usage
 
 ### bar chart
 
-``` Rust
+```Rust
 extern crate colorful;
 
 use std::cmp;
@@ -31,24 +30,22 @@ fn main() {
         println!("{:<width$} | {} {}%\n", languages.get(i).unwrap(), s.repeat(length).bg_hsl(h, 0.83, 0.44), value, width = c.len());
     }
 }
-
 ```
+
 Output
 
 <div>
     <img src="https://pic1.zhimg.com/v2-0306c2f7eb1073fe3917684feb73bc5e.png" width="500px"</img>
 </div>
 
-
-
 ## Todo
 
-- HSL support
-- RGB support
-- Gradient mode
-- Rainbow mode
-- brackets mode
-
+-   HSL support
+-   RGB support
+-   Gradient mode
+-   Rainbow mode
+-   brackets mode
 
 ## License
+
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fda2018%2Fcolorful.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fda2018%2Fcolorful?ref=badge_large)
