@@ -15,11 +15,17 @@ impl HSL {
     }
 }
 
+impl ToString for HSL {
+    fn to_string(&self) -> String {
+        hsl_to_rgb(*self).to_string()
+    }
+}
+
 
 pub fn hsl_to_rgb(hsl: HSL) -> RGB {
-    let mut red: f32;
-    let mut green: f32;
-    let mut blue: f32;
+    let red: f32;
+    let green: f32;
+    let blue: f32;
     let var_1: f32;
     let var_2: f32;
     if hsl.s == 0.0 {

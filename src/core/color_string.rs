@@ -33,6 +33,23 @@ impl StrMarker for ColorfulString {
 }
 
 
+impl ColorfulString {
+    pub fn new<T: StrMarker>(cs: T) -> ColorfulString {
+        ColorfulString {
+            text: String::from(cs.to_str()),
+            fg_color: cs.get_fg_color(),
+            bg_color: cs.get_bg_color(),
+            styles: cs.get_style(),
+        }
+    }
+    pub fn create_by_fg<T: ToString, S: StrMarker>(cs: S, color: T) -> ColorfulString {
+        ColorfulString { fg_color: Some(Colorado::new(color)), ..ColorfulString::new(cs) }
+    }
+    pub fn create_by_bg<T: ToString, S: StrMarker>(cs: S, color: T) -> ColorfulString {
+        ColorfulString { bg_color: Some(Colorado::new(color)), ..ColorfulString::new(cs) }
+    }
+}
+
 impl Display for ColorfulString {
     fn fmt(&self, f: &mut Formatter) -> FmtResult {
         let mut is_colored = false;
@@ -97,4 +114,3 @@ impl Display for ColorfulString {
         }
     }
 }
-

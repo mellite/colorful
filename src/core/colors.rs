@@ -1,7 +1,3 @@
-use std::fmt::Display;
-use std::fmt::Formatter;
-use std::fmt::Result as FmtResult;
-
 #[derive(Copy, Clone, PartialEq, Eq, Debug)]
 pub enum Color {
     Black,
@@ -560,7 +556,7 @@ impl Colorado {
                 ColorMode::RGB
             } else {
                 ColorMode::SIMPLE
-            }
+            },
         }
     }
 }

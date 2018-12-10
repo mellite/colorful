@@ -2,8 +2,6 @@ extern crate colorful;
 extern crate core;
 
 use colorful::Colorful;
-use colorful::HSL;
-use colorful::RGB;
 
 #[test]
 fn test_hsl_color() {
