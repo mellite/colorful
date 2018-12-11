@@ -147,9 +147,11 @@ impl<T> Colorful for T where T: StrMarker {
         let mut start = color.to_hsl().h;
         let s = self.to_str();
         let c = s.chars();
-        for i in c {
+        let length = c.clone().count() - 1;
+        for (index, i) in c.enumerate() {
             let b = i.to_string();
-            t.push(b.hsl(start, 1.0, 0.5).to_string());
+            let tmp = b.hsl(start, 1.0, 0.5).to_string();
+            t.push(format!("{}", &tmp[..tmp.len() - if index != length { 4 } else { 0 }]));
             start = (start + step) % 1.0;
         }
         CString::create_by_text(self, t.join(""))
@@ -158,11 +160,13 @@ impl<T> Colorful for T where T: StrMarker {
         let mut t = vec![];
         let c = self.to_str();
         let s = c.chars();
-        let step = 1.0 / s.clone().count() as f32;
+        let length = s.clone().count() - 1;
+        let step = 1.0 / (length + 1) as f32;
         let mut start = start.to_hsl().h;
-        for i in s {
+        for (index, i) in s.enumerate() {
             let b = i.to_string();
-            t.push(b.hsl(start, 1.0, 0.5).to_string());
+            let tmp = b.hsl(start, 1.0, 0.5).to_string();
+            t.push(format!("{}", &tmp[..tmp.len() - if index != length { 4 } else { 0 }]));
             start = (start + step) % 1.0;
         }
         CString::create_by_text(self, t.join(""))

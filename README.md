@@ -55,6 +55,22 @@ fn main() {
     <img src="https://pic4.zhimg.com/v2-e44643b9fe1e7ceb792a451f6eea70ce.png" width="600px"</img>
 </div>
 
+### Rainbow Mode
+
+```Rust
+extern crate colorful;
+
+use colorful::Color;
+use colorful::Colorful;
+
+fn main() {
+    println!("{}", "言葉にできず　凍えたままで 人前ではやさしく生きていた しわよせで　こんなふうに雑に 雨の夜にきみを　抱きしめてた".rainbow().underlined());
+}
+```
+
+<div align="center">
+    <img src="https://pic2.zhimg.com/v2-cbe6d4f0f7e1ab8befda108d3c992bad.png" width="500px"</img>
+</div>
 
 ### Bar chart
 
@@ -90,10 +106,11 @@ Output
 ## Todo
 
 -   [x] Basic 16 color
--   [x] Extra 240 color
+-   [ ] Extra 240 color
 -   [x] HSL support
 -   [x] RGB support
--   [ ] Gradient mode
+-   [x] Gradient mode
+-   [x] Rainbow mode
 -   [ ] Animation mode
 
 ## License
