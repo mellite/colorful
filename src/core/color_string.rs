@@ -2,6 +2,7 @@ use std::fmt::Display;
 use std::fmt::Formatter;
 use std::fmt::Result as FmtResult;
 
+use core::ColorInterface;
 use core::colors::Colorado;
 use core::colors::ColorMode;
 use core::StrMarker;
@@ -34,7 +35,7 @@ impl StrMarker for CString {
 
 
 impl CString {
-    pub fn new<T: StrMarker>(cs: T) -> CString {
+    pub fn new<S: StrMarker>(cs: S) -> CString {
         CString {
             text: String::from(cs.to_str()),
             fg_color: cs.get_fg_color(),
@@ -42,13 +43,15 @@ impl CString {
             styles: cs.get_style(),
         }
     }
-    pub fn create_by_fg<T: ToString, S: StrMarker>(cs: S, color: T) -> CString {
+    pub fn create_by_text<S: StrMarker>(cs: S, t: String) -> CString {
+        CString { text: t, ..CString::new(cs) }
+    }
+    pub fn create_by_fg<C: ColorInterface, S: StrMarker>(cs: S, color: C) -> CString {
         CString { fg_color: Some(Colorado::new(color)), ..CString::new(cs) }
     }
-    pub fn create_by_bg<T: ToString, S: StrMarker>(cs: S, color: T) -> CString {
+    pub fn create_by_bg<C: ColorInterface, S: StrMarker>(cs: S, color: C) -> CString {
         CString { bg_color: Some(Colorado::new(color)), ..CString::new(cs) }
     }
-
     pub fn create_by_style<S: StrMarker>(cs: S, style: Style) -> CString {
         CString {
             text: String::from(cs.to_str()),
