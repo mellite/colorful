@@ -18,6 +18,7 @@
 
 
 use core::color_string::CString;
+use core::ColorInterface;
 pub use core::colors::Color;
 pub use core::hsl::HSL;
 pub use core::rgb::RGB;
@@ -77,6 +78,10 @@ pub trait Colorful {
     fn bg_light_magenta(self) -> CString;
     fn bg_light_cyan(self) -> CString;
     fn bg_white(self) -> CString;
+    // more
+    fn gradient<C: ColorInterface>(self, color: C) -> CString;
+    fn gradient_with_color<C: ColorInterface>(self, start: C, stop: C) -> CString;
+    fn rainbow(self) -> CString;
 }
 
 impl<T> Colorful for T where T: StrMarker {
@@ -129,6 +134,36 @@ impl<T> Colorful for T where T: StrMarker {
     fn bg_light_magenta(self) -> CString { self.bg_color(Color::LightMagenta) }
     fn bg_light_cyan(self) -> CString { self.bg_color(Color::LightCyan) }
     fn bg_white(self) -> CString { self.bg_color(Color::White) }
+    // gradient
+    fn gradient<C: ColorInterface>(self, color: C) -> CString {
+        let mut t = vec![];
+        let default_step: f32 = 1.0 / 360.0;
+        let mut start = color.to_hsl().h;
+        let s = self.to_str();
+        let c = s.chars();
+        for i in c {
+            let b = i.to_string();
+            t.push(b.hsl(start, 1.0, 0.5).to_string());
+            start = (start + default_step) % 1.0;
+        }
+        CString::create_by_text(self, t.join(""))
+    }
+    fn gradient_with_color<C: ColorInterface>(self, start: C, stop: C) -> CString {
+        let mut t = vec![];
+        let c = self.to_str();
+        let s = c.chars();
+        let step = 1.0 / s.clone().count() as f32;
+        let mut start = start.to_hsl().h;
+        for i in s {
+            let b = i.to_string();
+            t.push(b.hsl(start, 1.0, 0.5).to_string());
+            start = (start + step) % 1.0;
+        }
+        CString::create_by_text(self, t.join(""))
+    }
+    fn rainbow(self) -> CString {
+        self.gradient_with_color(HSL::new(0.0, 1.0, 0.5), HSL::new(1.0, 1.0, 0.5))
+    }
 }
 
 

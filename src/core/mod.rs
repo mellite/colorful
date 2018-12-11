@@ -1,6 +1,7 @@
 pub use core::colors::Color;
 use core::colors::Colorado;
 pub use core::style::Style;
+use HSL;
 
 pub mod colors;
 pub mod symbols;
@@ -22,3 +23,7 @@ impl<'a> StrMarker for &'a str {
     }
 }
 
+pub trait ColorInterface {
+    fn to_color_str(&self) -> String;
+    fn to_hsl(&self) -> HSL;
+}
