@@ -56,7 +56,7 @@ fn main() {
 </div>
 
 ### Rainbow Mode
-
+Just from `hsl(0,100%,50%)` to ` hsl(300,100%,50%)`
 ```Rust
 extern crate colorful;
 
@@ -69,7 +69,7 @@ fn main() {
 ```
 
 <div align="center">
-    <img src="https://pic2.zhimg.com/v2-cbe6d4f0f7e1ab8befda108d3c992bad.png" width="500px"</img>
+    <img src="https://pic1.zhimg.com/v2-20a564f3673b7ae125efd1489c35a00d.png" width="700px"</img>
 </div>
 
 ### Bar chart

@@ -161,8 +161,9 @@ impl<T> Colorful for T where T: StrMarker {
         let c = self.to_str();
         let s = c.chars();
         let length = s.clone().count() - 1;
-        let step = 1.0 / (length + 1) as f32;
         let mut start = start.to_hsl().h;
+        let stop = stop.to_hsl().h;
+        let step = (stop - start) / length as f32;
         for (index, i) in s.enumerate() {
             let b = i.to_string();
             let tmp = b.hsl(start, 1.0, 0.5).to_string();
@@ -172,7 +173,7 @@ impl<T> Colorful for T where T: StrMarker {
         CString::create_by_text(self, t.join(""))
     }
     fn rainbow(self) -> CString {
-        self.gradient_with_color(HSL::new(0.0, 1.0, 0.5), HSL::new(1.0, 1.0, 0.5))
+        self.gradient_with_color(HSL::new(0.0, 1.0, 0.5), HSL::new(0.833, 1.0, 0.5))
     }
 }
 
