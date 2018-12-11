@@ -1,5 +1,8 @@
 //! Colored your terminal.
 //! You can use this package to make your string colorful in terminal.
+//! Platform support:
+//!  - Linux
+//!  - macOS
 
 /// It is recommended to use `Color` enum item to set foreground color.
 /// # Examples
@@ -80,6 +83,7 @@ pub trait Colorful {
     fn bg_white(self) -> CString;
     // more
     fn gradient<C: ColorInterface>(self, color: C) -> CString;
+    fn gradient_with_step<C: ColorInterface>(self, color: C, step: f32) -> CString;
     fn gradient_with_color<C: ColorInterface>(self, start: C, stop: C) -> CString;
     fn rainbow(self) -> CString;
 }
@@ -136,15 +140,17 @@ impl<T> Colorful for T where T: StrMarker {
     fn bg_white(self) -> CString { self.bg_color(Color::White) }
     // gradient
     fn gradient<C: ColorInterface>(self, color: C) -> CString {
+        self.gradient_with_step(color, 1.5 / 360.0)
+    }
+    fn gradient_with_step<C: ColorInterface>(self, color: C, step: f32) -> CString {
         let mut t = vec![];
-        let default_step: f32 = 1.0 / 360.0;
         let mut start = color.to_hsl().h;
         let s = self.to_str();
         let c = s.chars();
         for i in c {
             let b = i.to_string();
             t.push(b.hsl(start, 1.0, 0.5).to_string());
-            start = (start + default_step) % 1.0;
+            start = (start + step) % 1.0;
         }
         CString::create_by_text(self, t.join(""))
     }
