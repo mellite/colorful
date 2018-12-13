@@ -40,14 +40,19 @@ pub trait Colorful {
     fn bg_hsl(self, h: f32, s: f32, l: f32) -> CString;
     fn style(self, style: Style) -> CString;
     // style
+    /// Turn bold mode on.
     fn bold(self) -> CString;
+    /// Turn blinking mode on. Blink doesn't work in many terminal emulators ,and it will still work on the console.
     fn blink(self) -> CString;
+    /// Turn low intensity mode on.
     fn dim(self) -> CString;
+    /// Turn underline mode on.
     fn underlined(self) -> CString;
+    /// Turn reverse mode on (invert the foreground and background colors).
     fn reverse(self) -> CString;
+    /// Turn invisible text mode on (useful for passwords).
     fn hidden(self) -> CString;
-    // basic usage support 15 color
-    // foreground color
+    // Foreground color. Support 16 colors
     fn black(self) -> CString;
     fn red(self) -> CString;
     fn green(self) -> CString;
@@ -81,7 +86,7 @@ pub trait Colorful {
     fn bg_light_magenta(self) -> CString;
     fn bg_light_cyan(self) -> CString;
     fn bg_white(self) -> CString;
-    // more
+    // gradient
     fn gradient<C: ColorInterface>(self, color: C) -> CString;
     fn gradient_with_step<C: ColorInterface>(self, color: C, step: f32) -> CString;
     fn gradient_with_color<C: ColorInterface>(self, start: C, stop: C) -> CString;

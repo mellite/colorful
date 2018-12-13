@@ -796,8 +796,8 @@ pub enum ColorMode {
 
 #[derive(Clone)]
 pub struct Colorado {
-    pub mode: ColorMode,
-    pub color: String,
+    mode: ColorMode,
+    color: String,
 }
 
 
@@ -814,7 +814,7 @@ impl Colorado {
     pub fn new<C: ColorInterface>(color: C) -> Colorado {
         let c = format!("{}", color.to_color_str());
         Colorado {
-            color: format!("{}", color.to_color_str()),
+            color: c.clone(),
             mode: if c.contains(";") {
                 ColorMode::RGB
             } else {
@@ -822,5 +822,7 @@ impl Colorado {
             },
         }
     }
+    pub fn get_color(&self) -> String { self.color.clone() }
+    pub fn get_mode(&self) -> ColorMode { self.mode }
 }
 

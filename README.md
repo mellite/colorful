@@ -52,7 +52,7 @@ fn main() {
 
 ```
 <div align="center">
-    <img src="https://pic4.zhimg.com/v2-e44643b9fe1e7ceb792a451f6eea70ce.png" width="600px"</img>
+    <img src="images/1.png" width="600px"</img>
 </div>
 
 ### Rainbow Mode
@@ -69,7 +69,7 @@ fn main() {
 ```
 
 <div align="center">
-    <img src="https://pic1.zhimg.com/v2-20a564f3673b7ae125efd1489c35a00d.png" width="700px"</img>
+    <img src="images/2.png" width="700px"</img>
 </div>
 
 ### Bar chart
@@ -100,8 +100,38 @@ fn main() {
 Output
 
 <div align="center">
-    <img src="https://pic3.zhimg.com/v2-624f4a318325c6ad274aafa85666f77e.png" width="500px"</img>
+    <img src="images/3.png" width="500px"</img>
 </div>
+
+
+<table style="font-size: 60%; padding: 1px;">
+<thead>
+<tr>
+<th rowspan=2>Terminal</th>
+<th colspan=6 align=center>Formatting</th>
+<th colspan=4 align=center>Color</th>
+</tr>
+<tr>
+<!-- Formatting ---------><th>Bold</th><th>Dim</th><th>Underlined</th><th>Blink</th><th>Invert</th><th>Hidden</th>
+<!--Color -------><th>8</th><th>16</th><th>88</th><th>256</th>
+</tr>
+<tbody>
+</td><td>aTerm </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td> ~ </td><td><img src="images/no.png" alt=""/></td><td> -</td></tr>
+</tr><td>Eterm </td><td> ~ </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td> ~ </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/></td></tr>
+</tr><td>GNOME Terminal </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/></td></tr>
+</tr><td>Guake </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/></td></tr>
+</tr><td>Konsole </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/></td></tr>
+</tr><td>Nautilus Terminal </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/></td></tr>
+</tr><td>rxvt </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td> ~ </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> -</td></tr>
+</tr><td>Terminator </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/></td></tr>
+</tr><td>Tilda </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td><img src="images/no.png" alt=""/></td></tr>
+</tr><td>XFCE4 Terminal </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/></td></tr>
+</tr><td>XTerm </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td></tr>
+</tr><td>xvt </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td><img src="images/no.png" alt=""/></td><td><img src="images/no.png" alt=""/></td><td><img src="images/no.png" alt=""/></td><td> -</td></tr>
+</tr><td>Linux TTY </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td><img src="images/no.png" alt=""/></td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/> </td><td> ~ </td><td><img src="images/no.png" alt=""/></td><td> -</td></tr>
+</tr><td>VTE Terminal </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td> <img src="images/yes.png" alt=""/> </td><td><img src="images/no.png" alt=""/></td><td> <img src="images/yes.png" alt=""/></td></tr>
+</tbody>
+</thead>
 
 ## Todo
 
@@ -112,6 +142,8 @@ Output
 -   [x] Gradient mode
 -   [x] Rainbow mode
 -   [ ] Animation mode
+-   [ ] Document
+-   [x] Terminals compatibility
 
 ## License
 
