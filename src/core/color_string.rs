@@ -79,7 +79,7 @@ impl Display for CString {
             match &self.fg_color {
                 Some(v) => {
                     is_colored = true;
-                    match v.mode {
+                    match v.get_mode() {
                         ColorMode::SIMPLE => {
                             f.write_str(Symbol::Simple256Foreground.to_str())?;
                         }
@@ -88,7 +88,7 @@ impl Display for CString {
                         }
                         _ => {}
                     }
-                    write!(f, "{}", v.color)?;
+                    write!(f, "{}", v.get_color())?;
                 }
                 _ => {}
             }
@@ -99,7 +99,7 @@ impl Display for CString {
                     } else {
                         is_colored = true;
                     }
-                    match v.mode {
+                    match v.get_mode() {
                         ColorMode::SIMPLE => {
                             f.write_str(Symbol::Simple256Background.to_str())?;
                         }
@@ -108,7 +108,7 @@ impl Display for CString {
                         }
                         _ => {}
                     }
-                    write!(f, "{}", v.color)?;
+                    write!(f, "{}", v.get_color())?;
                 }
                 _ => {}
             }

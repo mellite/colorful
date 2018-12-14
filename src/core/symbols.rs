@@ -12,6 +12,15 @@ pub enum Symbol {
     Simple256Background,
     RgbForeground,
     RgbBackground,
+    ResetStyle,
+    ResetForeground,
+    ResetBackground,
+    ClearScreenFromCursorToEnd,
+    ClearScreenUpToCursor,
+    ClearEntireScreen,
+    ClearLineFromCursorToEnd,
+    ClearLineUpToCursor,
+    ClearEntireLine
 }
 
 impl Symbol {
@@ -26,6 +35,15 @@ impl Symbol {
             Symbol::Simple256Background => "\x1B[48;5;",
             Symbol::RgbForeground => "\x1B[38;2;",
             Symbol::RgbBackground => "\x1B[48;2;",
+            Symbol::ResetStyle => "\x1B[20m",
+            Symbol::ResetForeground => "\x1B[39m",
+            Symbol::ResetBackground => "\x1B[49m",
+            Symbol::ClearScreenFromCursorToEnd => "\x1B[0J",
+            Symbol::ClearScreenUpToCursor => "\x1B[1J",
+            Symbol::ClearEntireScreen => "\x1B[2J",
+            Symbol::ClearLineFromCursorToEnd => "\x1B[0K",
+            Symbol::ClearLineUpToCursor => "\x1B[1K",
+            Symbol::ClearEntireLine => "\x1B[2K",
         }
     }
 }
