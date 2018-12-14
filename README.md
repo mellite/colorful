@@ -104,6 +104,8 @@ Output
 </div>
 
 
+## Terminals compatibility
+
 <table style="font-size: 60%; padding: 1px;">
 <thead>
 <tr>
