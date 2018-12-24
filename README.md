@@ -15,10 +15,14 @@ extern crate colorful;
 
 use colorful::Color;
 use colorful::Colorful;
+//use colorful::HSL;
+//use colorful::RGB;
 
 fn main() {
     let s = "Hello world";
     println!("{}", s.color(Color::Blue).bg_color(Color::Yellow).bold());
+    //     println!("{}", s.color(HSL::new(1.0, 1.0, 0.5)).bold());
+    //     println!("{}", s.color(RGB::new(255, 0, 0)).bold());
     println!("{}", s.blue().bg_yellow());
 }
 ```
@@ -55,16 +59,15 @@ fn main() {
     <img src="images/1.png" width="600px"</img>
 </div>
 
-### Rainbow Mode
-Just from `hsl(0,100%,50%)` to ` hsl(300,100%,50%)`
+### Gradient with style
+
 ```Rust
 extern crate colorful;
 
-use colorful::Color;
 use colorful::Colorful;
 
 fn main() {
-    println!("{}", "言葉にできず　凍えたままで 人前ではやさしく生きていた しわよせで　こんなふうに雑に 雨の夜にきみを　抱きしめてた".rainbow().underlined());
+    println!("{}", "言葉にできず　凍えたままで 人前ではやさしく生きていた しわよせで　こんなふうに雑に 雨の夜にきみを　抱きしめてた".gradient_with_color(HSL::new(0.0, 1.0, 0.5), HSL::new(0.833, 1.0, 0.5)).underlined());
 }
 ```
 
@@ -77,7 +80,6 @@ fn main() {
 ```Rust
 extern crate colorful;
 
-use colorful::Color;
 use colorful::Colorful;
 use colorful::HSL;
 
@@ -95,12 +97,51 @@ fn main() {
     }
 }
 ```
-
-
 Output
 
 <div align="center">
     <img src="images/3.png" width="500px"</img>
+</div>
+
+### Animation
+
+#### Rainbow
+
+```Rust
+extern crate colorful;
+
+use colorful::Colorful;
+
+fn main() {
+    let text = format!("{:^50}\n{}\r\n{}", "岳飞 小重山", "昨夜寒蛩不住鸣 惊回千里梦 已三更 起身独自绕阶行 人悄悄 帘外月胧明",
+                       "白首为功名 旧山松竹老 阻归程 欲将心事付瑶琴 知音少 弦断有谁听");
+    text.rainbow();
+}
+```
+Output
+
+<div align="center">
+    <img src="images/11.gif"</img>
+</div>
+
+#### Neon
+
+```Rust
+extern crate colorful;
+
+use colorful::Colorful;
+
+fn main() {
+    let text = format!("{:^28}\n{}", "WARNING", "BIG BROTHER IS WATCHING YOU!!!");
+    text.neon(RGB::new(226, 14, 14), RGB::new(158, 158, 158));
+    // or you can use text.warn();
+}
+
+```
+Output
+
+<div align="center">
+    <img src="images/22.gif"</img>
 </div>
 
 
@@ -146,7 +187,7 @@ Output
 -   [x] RGB support
 -   [x] Gradient mode
 -   [x] Rainbow mode
--   [ ] Animation mode
+-   [x] Animation mode
 -   [ ] Document
 -   [x] Terminals compatibility
 

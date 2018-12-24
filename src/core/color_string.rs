@@ -46,10 +46,10 @@ impl CString {
     pub fn create_by_text<S: StrMarker>(cs: S, t: String) -> CString {
         CString { text: t, ..CString::new(cs) }
     }
-    pub fn create_by_fg<C: ColorInterface, S: StrMarker>(cs: S, color: C) -> CString {
+    pub fn create_by_fg<S: StrMarker, C: ColorInterface>(cs: S, color: C) -> CString {
         CString { fg_color: Some(Colorado::new(color)), ..CString::new(cs) }
     }
-    pub fn create_by_bg<C: ColorInterface, S: StrMarker>(cs: S, color: C) -> CString {
+    pub fn create_by_bg<S: StrMarker, C: ColorInterface>(cs: S, color: C) -> CString {
         CString { bg_color: Some(Colorado::new(color)), ..CString::new(cs) }
     }
     pub fn create_by_style<S: StrMarker>(cs: S, style: Style) -> CString {
