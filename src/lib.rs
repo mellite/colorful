@@ -3,8 +3,11 @@
 //! Platform support:
 //!  - Linux
 //!  - macOS
+//! <img src="https://github.com/rocketsman/colorful/blob/master/images/1.png?raw=true" width="60%">
 
-/// It is recommended to use `Color` enum item to set foreground color.
+/// It is recommended to use `Color` enum item to set foreground color not literal string.
+/// Literal string makes program uncontrollable, you can use `Color` `RGB::new(1,1,1)` or `HSL::new(0.5,0.5,0.5)`
+/// to create color and pass the variable to method.
 /// # Examples
 /// ```
 /// extern crate colorful;
@@ -17,7 +20,6 @@
 ///     println!("{}",s.color(Color::Red).bg_color(Color::Yellow).bold().to_string());
 /// }
 /// ```
-///
 
 use std::{thread, time};
 
@@ -31,29 +33,24 @@ pub use core::style::Style;
 
 pub mod core;
 
-
+/// Support `&str` and `String`, you can use `"text".red()` and `s.red()` for s:String
 pub trait Colorful {
+    /// Set foreground color. Support Color enum and HSL, RGB mode.
+    /// ```Rust
+    /// extern crate colorful;
+    ///
+    /// use colorful::Colorful;
+    /// use colorful::Color;
+    ///
+    /// fn main() {
+    ///     let a = "Hello world";
+    ///     println!("{}", a.color(Color::Red));
+    ///     println!("{}", a.blue());
+    ///     let b = String::from("Hello world");
+    ///     println!("{}", b.blue());
+    /// }
+    /// ```
     fn color<C: ColorInterface>(self, color: C) -> CString;
-    fn bg_color<C: ColorInterface>(self, color: C) -> CString;
-    fn rgb(self, r: u8, g: u8, b: u8) -> CString;
-    fn bg_rgb(self, r: u8, g: u8, b: u8) -> CString;
-    fn hsl(self, h: f32, s: f32, l: f32) -> CString;
-    fn bg_hsl(self, h: f32, s: f32, l: f32) -> CString;
-    fn style(self, style: Style) -> CString;
-    // style
-    /// Turn bold mode on.
-    fn bold(self) -> CString;
-    /// Turn blinking mode on. Blink doesn't work in many terminal emulators ,and it will still work on the console.
-    fn blink(self) -> CString;
-    /// Turn low intensity mode on.
-    fn dim(self) -> CString;
-    /// Turn underline mode on.
-    fn underlined(self) -> CString;
-    /// Turn reverse mode on (invert the foreground and background colors).
-    fn reverse(self) -> CString;
-    /// Turn invisible text mode on (useful for passwords).
-    fn hidden(self) -> CString;
-    // Foreground color. Support 16 colors
     fn black(self) -> CString;
     fn red(self) -> CString;
     fn green(self) -> CString;
@@ -70,7 +67,19 @@ pub trait Colorful {
     fn light_magenta(self) -> CString;
     fn light_cyan(self) -> CString;
     fn white(self) -> CString;
-    // background color
+    /// Set background color. Support Color enum and HSL, RGB mode.
+    /// ```Rust
+    /// extern crate colorful;
+    ///
+    /// use colorful::Colorful;
+    /// use colorful::Color;
+    ///
+    /// fn main() {
+    ///     let a = "Hello world";
+    ///     println!("{}", a.bg_color(Color::Red));
+    /// }
+    /// ```
+    fn bg_color<C: ColorInterface>(self, color: C) -> CString;
     fn bg_black(self) -> CString;
     fn bg_red(self) -> CString;
     fn bg_green(self) -> CString;
@@ -87,35 +96,84 @@ pub trait Colorful {
     fn bg_light_magenta(self) -> CString;
     fn bg_light_cyan(self) -> CString;
     fn bg_white(self) -> CString;
-    // gradient
-    fn gradient<C: ColorInterface>(self, color: C) -> CString;
+    /// Support RGB color and HSL mode
+    /// ```Rust
+    /// extern crate colorful;
+    ///
+    /// use colorful::Colorful;
+    ///
+    /// fn main() {
+    ///     let a = "Hello world";
+    ///     println!("{}", a.rgb(100, 100, 100).bg_rgb(100, 100, 100);
+    ///     println!("{}", a.hsl(0.5, 0.5, 0.5)).bg_hsl(0.5, 0.5, 0.5));
+    /// }
+    /// ```
+    fn rgb(self, r: u8, g: u8, b: u8) -> CString;
+    fn bg_rgb(self, r: u8, g: u8, b: u8) -> CString;
+    fn hsl(self, h: f32, s: f32, l: f32) -> CString;
+    fn bg_hsl(self, h: f32, s: f32, l: f32) -> CString;
+    /// Terminal effect
+    /// See [ANSI escape code](https://en.wikipedia.org/wiki/ANSI_escape_code)
+    /// For terminals compatibility, check [Terminals compatibility](https://github.com/rocketsman/colorful#terminals-compatibility)
+    fn style(self, style: Style) -> CString;
+    /// Turn bold mode on.
+    fn bold(self) -> CString;
+    /// Turn blinking mode on. Blink doesn't work in many terminal emulators ,and it will still work on the console.
+    fn blink(self) -> CString;
+    /// Turn low intensity mode on.
+    fn dim(self) -> CString;
+    /// Turn underline mode on.
+    fn underlined(self) -> CString;
+    /// Turn reverse mode on (invert the foreground and background colors).
+    fn reverse(self) -> CString;
+    /// Turn invisible text mode on (useful for passwords).
+    fn hidden(self) -> CString;
+    /// Apply gradient color to sentences, support multiple lines.
+    /// You can use `use colorful::Color;` or `use colorful::HSL;` or `use colorful::RGB;`
+    /// to import colors and create gradient string.
+    /// ```Rust
+    /// extern crate colorful;
+    ///
+    /// use colorful::Color;
+    /// use colorful::Colorful;
+    ///
+    /// fn main() {
+    ///     println!("{}", "This code is editable and runnable!".gradient(Color::Red));
+    ///     println!("{}", "¡Este código es editable y ejecutable!".gradient(Color::Green));
+    ///     println!("{}", "Ce code est modifiable et exécutable !".gradient(Color::Yellow));
+    ///     println!("{}", "Questo codice è modificabile ed eseguibile!".gradient(Color::Blue));
+    ///     println!("{}", "このコードは編集して実行出来ます！".gradient(Color::Magenta));
+    ///     println!("{}", "여기에서 코드를 수정하고 실행할 수 있습니다!".gradient(Color::Cyan));
+    ///     println!("{}", "Ten kod można edytować oraz uruchomić!".gradient(Color::LightGray));
+    ///     println!("{}", "Este código é editável e executável!".gradient(Color::DarkGray));
+    ///     println!("{}", "Этот код можно отредактировать и запустить!".gradient(Color::LightRed));
+    ///     println!("{}", "Bạn có thể edit và run code trực tiếp!".gradient(Color::LightGreen));
+    ///     println!("{}", "这段代码是可以编辑并且能够运行的！".gradient(Color::LightYellow));
+    ///     println!("{}", "Dieser Code kann bearbeitet und ausgeführt werden!".gradient(Color::LightBlue));
+    ///     println!("{}", "Den här koden kan redigeras och köras!".gradient(Color::LightMagenta));
+    ///     println!("{}", "Tento kód můžete upravit a spustit".gradient(Color::LightCyan));
+    ///     println!("{}", "این کد قابلیت ویرایش و اجرا دارد!".gradient(Color::White));
+    ///     println!("{}", "โค้ดนี้สามารถแก้ไขได้และรันได้".gradient(Color::Grey0));
+    /// }
+    /// ```
+    /// <img src="https://github.com/rocketsman/colorful/blob/master/images/1.png?raw=true" width="60%">
     fn gradient_with_step<C: ColorInterface>(self, color: C, step: f32) -> CString;
     fn gradient_with_color<C: ColorInterface>(self, start: C, stop: C) -> CString;
-    // animations
+    fn gradient<C: ColorInterface>(self, color: C) -> CString;
     fn rainbow_with_speed(self, speed: i32);
+    /// Rainbow mode, support multiple lines
+    /// <img src="https://github.com/rocketsman/colorful/blob/master/images/11.gif?raw=true" width="60%">
     fn rainbow(self);
     fn neon_with_speed<C: ColorInterface>(self, low: C, high: C, speed: i32);
+    /// Neon mode
     fn neon<C: ColorInterface>(self, low: C, high: C);
+    /// Show some warning words.
+    /// <img src="https://github.com/rocketsman/colorful/blob/master/images/22.gif?raw=true" width="60%">
     fn warn(self);
 }
 
 impl<T> Colorful for T where T: StrMarker {
-    /// Using enum item is recommended. color will replace
     fn color<C: ColorInterface>(self, color: C) -> CString { CString::create_by_fg(self, color) }
-    fn bg_color<C: ColorInterface>(self, color: C) -> CString { CString::create_by_bg(self, color) }
-    fn rgb(self, r: u8, g: u8, b: u8) -> CString { CString::create_by_fg(self, RGB::new(r, g, b)) }
-    fn bg_rgb(self, r: u8, g: u8, b: u8) -> CString { CString::create_by_bg(self, RGB::new(r, g, b)) }
-    fn hsl(self, h: f32, s: f32, l: f32) -> CString { CString::create_by_fg(self, HSL::new(h, s, l)) }
-    fn bg_hsl(self, h: f32, s: f32, l: f32) -> CString { CString::create_by_bg(self, HSL::new(h, s, l)) }
-    fn style(self, style: Style) -> CString { CString::create_by_style(self, style) }
-    // style
-    fn bold(self) -> CString { self.style(Style::Bold) }
-    fn blink(self) -> CString { self.style(Style::Blink) }
-    fn dim(self) -> CString { self.style(Style::Dim) }
-    fn underlined(self) -> CString { self.style(Style::Underlined) }
-    fn reverse(self) -> CString { self.style(Style::Reverse) }
-    fn hidden(self) -> CString { self.style(Style::Hidden) }
-    // color
     fn black(self) -> CString { self.color(Color::Black) }
     fn red(self) -> CString { self.color(Color::Red) }
     fn green(self) -> CString { self.color(Color::Green) }
@@ -132,7 +190,7 @@ impl<T> Colorful for T where T: StrMarker {
     fn light_magenta(self) -> CString { self.color(Color::LightMagenta) }
     fn light_cyan(self) -> CString { self.color(Color::LightCyan) }
     fn white(self) -> CString { self.color(Color::White) }
-    // background color
+    fn bg_color<C: ColorInterface>(self, color: C) -> CString { CString::create_by_bg(self, color) }
     fn bg_black(self) -> CString { self.bg_color(Color::Black) }
     fn bg_red(self) -> CString { self.bg_color(Color::Red) }
     fn bg_green(self) -> CString { self.bg_color(Color::Green) }
@@ -149,10 +207,17 @@ impl<T> Colorful for T where T: StrMarker {
     fn bg_light_magenta(self) -> CString { self.bg_color(Color::LightMagenta) }
     fn bg_light_cyan(self) -> CString { self.bg_color(Color::LightCyan) }
     fn bg_white(self) -> CString { self.bg_color(Color::White) }
-    // gradient
-    fn gradient<C: ColorInterface>(self, color: C) -> CString {
-        self.gradient_with_step(color, 1.5 / 360.0)
-    }
+    fn rgb(self, r: u8, g: u8, b: u8) -> CString { CString::create_by_fg(self, RGB::new(r, g, b)) }
+    fn bg_rgb(self, r: u8, g: u8, b: u8) -> CString { CString::create_by_bg(self, RGB::new(r, g, b)) }
+    fn hsl(self, h: f32, s: f32, l: f32) -> CString { CString::create_by_fg(self, HSL::new(h, s, l)) }
+    fn bg_hsl(self, h: f32, s: f32, l: f32) -> CString { CString::create_by_bg(self, HSL::new(h, s, l)) }
+    fn style(self, style: Style) -> CString { CString::create_by_style(self, style) }
+    fn bold(self) -> CString { self.style(Style::Bold) }
+    fn blink(self) -> CString { self.style(Style::Blink) }
+    fn dim(self) -> CString { self.style(Style::Dim) }
+    fn underlined(self) -> CString { self.style(Style::Underlined) }
+    fn reverse(self) -> CString { self.style(Style::Reverse) }
+    fn hidden(self) -> CString { self.style(Style::Hidden) }
     fn gradient_with_step<C: ColorInterface>(self, color: C, step: f32) -> CString {
         let mut t = vec![];
         let mut start = color.to_hsl().h;
@@ -182,6 +247,15 @@ impl<T> Colorful for T where T: StrMarker {
             start = (start + step) % 1.0;
         }
         CString::create_by_text(self, t.join(""))
+    }
+    fn gradient<C: ColorInterface>(self, color: C) -> CString {
+        let text = self.to_str();
+        let lines: Vec<_> = text.lines().collect();
+        let mut tmp = vec![];
+        for sub_str in lines.iter() {
+            tmp.push(sub_str.gradient_with_step(color.clone(), 1.5 / 360.0).to_string());
+        }
+        CString::new(tmp.join("\n"))
     }
     fn rainbow_with_speed(self, speed: i32) {
         let respite: u64 = match speed {
@@ -228,7 +302,7 @@ impl<T> Colorful for T where T: StrMarker {
         self.neon_with_speed(high, low, 3);
     }
     fn warn(self) {
-        self.neon(RGB::new(226, 14, 14), RGB::new(158, 158, 158));
+        self.neon_with_speed(RGB::new(226, 14, 14), RGB::new(158, 158, 158), 3);
     }
 }
 
