@@ -79,4 +79,12 @@ mod tests {
 
         assert_eq!(hsl, rgb.rgb_to_hsl());
     }
+
+    #[test]
+    fn test_rgb_2_hsl_4() {
+        let hsl = HSL::new(0.08333334, 1.0, 0.6862745);
+        let rgb = RGB::new(255, 175, 95);
+
+        assert_eq!(hsl, rgb.rgb_to_hsl());
+    }
 }
