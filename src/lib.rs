@@ -19,6 +19,7 @@
 /// ```
 ///
 
+use std::{thread, time};
 
 use core::color_string::CString;
 use core::ColorInterface;
@@ -32,8 +33,8 @@ pub mod core;
 
 
 pub trait Colorful {
-    fn color(self, color: Color) -> CString;
-    fn bg_color(self, color: Color) -> CString;
+    fn color<C: ColorInterface>(self, color: C) -> CString;
+    fn bg_color<C: ColorInterface>(self, color: C) -> CString;
     fn rgb(self, r: u8, g: u8, b: u8) -> CString;
     fn bg_rgb(self, r: u8, g: u8, b: u8) -> CString;
     fn hsl(self, h: f32, s: f32, l: f32) -> CString;
@@ -90,13 +91,18 @@ pub trait Colorful {
     fn gradient<C: ColorInterface>(self, color: C) -> CString;
     fn gradient_with_step<C: ColorInterface>(self, color: C, step: f32) -> CString;
     fn gradient_with_color<C: ColorInterface>(self, start: C, stop: C) -> CString;
-    fn rainbow(self) -> CString;
+    // animations
+    fn rainbow_with_speed(self, speed: i32);
+    fn rainbow(self);
+    fn neon_with_speed<C: ColorInterface>(self, low: C, high: C, speed: i32);
+    fn neon<C: ColorInterface>(self, low: C, high: C);
+    fn warn(self);
 }
 
 impl<T> Colorful for T where T: StrMarker {
     /// Using enum item is recommended. color will replace
-    fn color(self, color: Color) -> CString { CString::create_by_fg(self, color) }
-    fn bg_color(self, color: Color) -> CString { CString::create_by_bg(self, color) }
+    fn color<C: ColorInterface>(self, color: C) -> CString { CString::create_by_fg(self, color) }
+    fn bg_color<C: ColorInterface>(self, color: C) -> CString { CString::create_by_bg(self, color) }
     fn rgb(self, r: u8, g: u8, b: u8) -> CString { CString::create_by_fg(self, RGB::new(r, g, b)) }
     fn bg_rgb(self, r: u8, g: u8, b: u8) -> CString { CString::create_by_bg(self, RGB::new(r, g, b)) }
     fn hsl(self, h: f32, s: f32, l: f32) -> CString { CString::create_by_fg(self, HSL::new(h, s, l)) }
@@ -177,11 +183,54 @@ impl<T> Colorful for T where T: StrMarker {
         }
         CString::create_by_text(self, t.join(""))
     }
-    fn rainbow(self) -> CString {
-        self.gradient_with_color(HSL::new(0.0, 1.0, 0.5), HSL::new(0.833, 1.0, 0.5))
+    fn rainbow_with_speed(self, speed: i32) {
+        let respite: u64 = match speed {
+            3 => { 10 }
+            2 => { 5 }
+            1 => { 2 }
+            _ => { 0 }
+        };
+        let text = self.to_str();
+        let lines: Vec<_> = text.lines().collect();
+        for i in 0..360 {
+            let mut tmp = vec![];
+            for sub_str in lines.iter() {
+                tmp.push(sub_str.gradient_with_step(HSL::new(i as f32 / 360.0, 1.0, 0.5), 0.02).to_string());
+            }
+            println!("{}\x1B[{}F\x1B[G\x1B[2K", tmp.join("\n"), lines.len());
+            let ten_millis = time::Duration::from_millis(respite);
+            thread::sleep(ten_millis);
+        }
+    }
+    fn rainbow(self) {
+        self.rainbow_with_speed(3);
+    }
+    fn neon_with_speed<C: ColorInterface>(self, high: C, low: C, speed: i32) {
+        let respite: u64 = match speed {
+            3 => { 500 }
+            2 => { 200 }
+            1 => { 100 }
+            _ => { 0 }
+        };
+        let text = self.to_str();
+        let lines: Vec<_> = text.lines().collect();
+        let mut coin = true;
+        let positive = format!("{}\x1B[{}F\x1B[2K", text.color(high), lines.len());
+        let negative = format!("{}\x1B[{}F\x1B[2K", text.color(low), lines.len());
+        for _ in 0..360 {
+            if coin { println!("{}", positive) } else { println!("{}", negative) };
+            let ten_millis = time::Duration::from_millis(respite);
+            thread::sleep(ten_millis);
+            coin = !coin;
+        }
+    }
+    fn neon<C: ColorInterface>(self, high: C, low: C) {
+        self.neon_with_speed(high, low, 3);
+    }
+    fn warn(self) {
+        self.neon(RGB::new(226, 14, 14), RGB::new(158, 158, 158));
     }
 }
-
 
 pub trait ExtraColorInterface {
     fn grey0(self) -> CString;
