@@ -2,8 +2,8 @@ extern crate colorful;
 extern crate core;
 
 use colorful::Colorful;
-use colorful::core::Color;
-use colorful::core::Style;
+use colorful::Color;
+use colorful::Style;
 
 #[test]
 fn test_1() {

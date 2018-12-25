@@ -1,7 +1,8 @@
-pub use core::colors::Color;
+use core::colors::Color;
 use core::colors::Colorado;
-pub use core::style::Style;
+use core::style::Style;
 use HSL;
+
 
 pub mod colors;
 pub mod symbols;
@@ -20,6 +21,12 @@ pub trait StrMarker {
 impl<'a> StrMarker for &'a str {
     fn to_str(&self) -> String {
         String::from(*self)
+    }
+}
+
+impl StrMarker for String {
+    fn to_str(&self) -> String {
+        self.clone()
     }
 }
 

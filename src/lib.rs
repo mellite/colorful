@@ -215,8 +215,8 @@ impl<T> Colorful for T where T: StrMarker {
         let text = self.to_str();
         let lines: Vec<_> = text.lines().collect();
         let mut coin = true;
-        let positive = format!("{}\x1B[{}F\x1B[2K", text.color(high), lines.len());
-        let negative = format!("{}\x1B[{}F\x1B[2K", text.color(low), lines.len());
+        let positive = format!("{}\x1B[{}F\x1B[2K", text.clone().color(high), lines.len());
+        let negative = format!("{}\x1B[{}F\x1B[2K", text.clone().color(low), lines.len());
         for _ in 0..360 {
             if coin { println!("{}", positive) } else { println!("{}", negative) };
             let ten_millis = time::Duration::from_millis(respite);

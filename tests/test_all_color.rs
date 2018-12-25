@@ -2,7 +2,7 @@ extern crate colorful;
 extern crate core;
 
 use colorful::Colorful;
-use colorful::core::Color;
+use colorful::Color;
 use colorful::core::ColorInterface;
 use colorful::HSL;
 

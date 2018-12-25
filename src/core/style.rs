@@ -11,17 +11,6 @@ pub enum Style {
 }
 
 impl Style {
-    pub fn to_str(&self) -> &'static str {
-        match self {
-            Style::Bold => "1",
-            Style::Dim => "2",
-            Style::Underlined => "4",
-            Style::Blink => "5",
-            Style::Reverse => "7",
-            Style::Hidden => "8",
-        }
-    }
-
     pub fn to_string(&self) -> String {
         match self {
             Style::Bold => String::from("1"),

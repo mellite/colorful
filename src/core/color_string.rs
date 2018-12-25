@@ -37,7 +37,7 @@ impl StrMarker for CString {
 impl CString {
     pub fn new<S: StrMarker>(cs: S) -> CString {
         CString {
-            text: String::from(cs.to_str()),
+            text: cs.to_str(),
             fg_color: cs.get_fg_color(),
             bg_color: cs.get_bg_color(),
             styles: cs.get_style(),
@@ -54,7 +54,7 @@ impl CString {
     }
     pub fn create_by_style<S: StrMarker>(cs: S, style: Style) -> CString {
         CString {
-            text: String::from(cs.to_str()),
+            text: cs.to_str(),
             styles: match cs.get_style() {
                 Some(mut v) => {
                     v.push(style);
