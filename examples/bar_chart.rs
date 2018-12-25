@@ -1,7 +1,5 @@
 extern crate colorful;
 
-use std::cmp;
-
 use colorful::Colorful;
 
 fn main() {

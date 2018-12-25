@@ -4,8 +4,6 @@ dist: trusty
 matrix:
   fast_finish: true
   include:
-  - rust: nightly
-    env: FEATURES="--no-default-features" HYPER_DOCS="1"
   - rust: stable
     env: FEATURES="--no-default-features"
 
