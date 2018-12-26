@@ -1,4 +1,3 @@
-use core::colors::Color;
 use core::colors::Colorado;
 use core::style::Style;
 use HSL;
@@ -30,7 +29,8 @@ impl StrMarker for String {
     }
 }
 
-pub trait ColorInterface {
+/// `ColorInterface` is for basic trait for `Colorful`, `RGB`, `HSL` and `Color` implement this trait.
+pub trait ColorInterface: Clone {
     fn to_color_str(&self) -> String;
     fn to_hsl(&self) -> HSL;
 }
