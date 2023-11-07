@@ -145,6 +145,11 @@ Output
 </div>
 
 
+## ANSI Support
+
+This crate respects the NO_COLOR env variable (see [the specs](https://no-color.org/)).  
+This crate respects the CLICOLOR and CLICOLOR_FORCE env variable (see [the specs](https://bixense.com/clicolors/)).
+
 ## Terminals compatibility
 
 <table style="font-size: 60%; padding: 1px;">

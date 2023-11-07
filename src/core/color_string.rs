@@ -2,7 +2,7 @@ use std::fmt::Display;
 use std::fmt::Formatter;
 use std::fmt::Result as FmtResult;
 
-use core::ColorInterface;
+use core::{ColorInterface, ansi_support};
 use core::colors::Colorado;
 use core::colors::ColorMode;
 use core::StrMarker;
@@ -69,10 +69,11 @@ impl CString {
 }
 
 impl Display for CString {
+
     fn fmt(&self, f: &mut Formatter) -> FmtResult {
         let mut is_colored = false;
 
-        if self.bg_color.is_none() && self.fg_color.is_none() && self.styles.is_none() {
+        if !ansi_support() || (self.bg_color.is_none() && self.fg_color.is_none() && self.styles.is_none()) {
             write!(f, "{}", self.text)?;
             Ok(())
         } else {
