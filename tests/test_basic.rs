@@ -31,6 +31,7 @@ fn test_style() {
     let s = "Hello world";
     assert_eq!("\x1B[1mHello world\x1B[0m".to_owned(), s.style(Style::Bold).to_string());
     assert_eq!("\x1B[1;5mHello world\x1B[0m".to_owned(), s.style(Style::Bold).style(Style::Blink).to_string());
+    assert_eq!("\x1B[3;9mHello world\x1B[0m".to_owned(), s.style(Style::Italic).style(Style::Strikethrough).to_string());
 }
 
 #[test]
