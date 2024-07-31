@@ -1,6 +1,6 @@
 [package]
 name = "colorful"
-version = "0.2.2"
+version = "0.3.2"
 authors = ["da2018 <da2018t@gmail.com>"]
 
 description = "Make your terminal output colorful"
@@ -8,7 +8,7 @@ license = "MIT"
 homepage = "https://github.com/mellite/colorful"
 readme = "README.md"
 keywords = ["cli","colors","terminal"]
-categories = ["cli","colors","terminal"]
+categories = ["command-line-utilities", "text-processing"]
 repository = "https://github.com/mellite/colorful"
 exclude = ["images/*","examples"]
 
