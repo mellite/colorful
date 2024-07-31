@@ -122,12 +122,16 @@ pub trait Colorful {
     fn blink(self) -> CString;
     /// Turn low intensity mode on.
     fn dim(self) -> CString;
+    /// Turn italic mode on.
+    fn italic(self) -> CString;
     /// Turn underline mode on.
     fn underlined(self) -> CString;
     /// Turn reverse mode on (invert the foreground and background colors).
     fn reverse(self) -> CString;
     /// Turn invisible text mode on (useful for passwords).
     fn hidden(self) -> CString;
+    /// Turn strikethrough mode on.
+    fn strikethrough(self) -> CString;
     /// Apply gradient color to sentences, support multiple lines.
     /// You can use `use colorful::Color;` or `use colorful::HSL;` or `use colorful::RGB;`
     /// to import colors and create gradient string.
@@ -215,9 +219,11 @@ impl<T> Colorful for T where T: StrMarker {
     fn bold(self) -> CString { self.style(Style::Bold) }
     fn blink(self) -> CString { self.style(Style::Blink) }
     fn dim(self) -> CString { self.style(Style::Dim) }
+    fn italic(self) -> CString { self.style(Style::Italic) }
     fn underlined(self) -> CString { self.style(Style::Underlined) }
     fn reverse(self) -> CString { self.style(Style::Reverse) }
     fn hidden(self) -> CString { self.style(Style::Hidden) }
+    fn strikethrough(self) -> CString { self.style(Style::Strikethrough) }
     fn gradient_with_step<C: ColorInterface>(self, color: C, step: f32) -> CString {
         let mut t = vec![];
         let mut start = color.to_hsl().h;
